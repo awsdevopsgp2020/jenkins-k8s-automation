@@ -15,5 +15,6 @@ spec:
       containers:
       - name: webapp
         image: webapp:latest
+        imagePullPolicy: Never   # <-- Use local Docker image
         ports:
         - containerPort: 80
