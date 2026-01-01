@@ -1,8 +1,7 @@
-
 pipeline {
     agent any
 
-     environment {
+    environment {
         DOCKER_IMAGE = 'webapp:latest'
         KUBECONFIG = '/home/gajanan/.kube/config' // Added for Jenkins access to local K8s
     }
@@ -11,15 +10,22 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                    git branch: 'main',
-                        url: 'https://github.com/awsdevopsgp2020/jenkins-k8s-automation.git'
-                }
+                git branch: 'main',
+                    url: 'https://github.com/awsdevopsgp2020/jenkins-k8s-automation.git'
             }
-
+        }
 
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $DOCKER_IMAGE ./webapp'
+            }
+        }
+
+        stage('Verify Kubernetes Access') {
+            steps {
+                echo 'Checking access to Kubernetes cluster'
+                sh 'kubectl get nodes'
+                sh 'kubectl get pods --all-namespaces'
             }
         }
 
