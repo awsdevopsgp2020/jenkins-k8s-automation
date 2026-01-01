@@ -2,8 +2,9 @@
 pipeline {
     agent any
 
-    environment {
+     environment {
         DOCKER_IMAGE = 'webapp:latest'
+        KUBECONFIG = '/home/gajanan/.kube/config' // Added for Jenkins access to local K8s
     }
 
     stages {
